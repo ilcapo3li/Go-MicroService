@@ -7,4 +7,4 @@
 
 install Go dependencies
 
-`go get download`
+`go mod download`
