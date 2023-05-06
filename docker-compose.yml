@@ -1,10 +1,30 @@
 version: '3.8'
 
 services:
-  web:
-    build: .
+  gateway:
+    build:
+      context: ./Gateway
+      dockerfile: dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - .:/usr/src/app
+      - .:/go/src/
+    networks:
+      - goway
+
+  users:
+    build:
+      context: ./Users
+      dockerfile: dockerfile
+    ports:
+      - "7070:7070"
+    volumes:
+      - .:/go/src/
+    depends_on:
+      - gateway
+    networks:
+      - goway
+networks:
+  goway:
+    driver: bridge
 

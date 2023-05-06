@@ -2,57 +2,70 @@ package main
 
 import (
 	"fmt"
-	"strings"
-
-	"github.com/gofiber/fiber/v2"
+	"net/http"
 )
 
+// "fmt"
+// "strings"
+
+// "github.com/gofiber/fiber/v2"
+
 func main() {
-	app := fiber.New()
+	fmt.Println("From main package")
 
-	app.Use("/", func(c *fiber.Ctx) error {
+	res, err := http.Get("http://users:7070/users")
 
-		URI := c.Context().URI()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 
-		uriSplit := strings.Split(string(URI.FullURI()), "/")
+	fmt.Println(res)
 
-		// method := c.Context().Method()
+	// app := fiber.New()
 
-		// headers := c.Context().Request.Header
+	// app.Use("/", func(c *fiber.Ctx) error {
 
-		// body = c.Context().Request.Body()
+	// 	URI := c.Context().URI()
 
-		fmt.Println(uriSplit[3])
+	// 	uriSplit := strings.Split(string(URI.FullURI()), "/")
 
-		type service struct {
-			Name   string `json:"name"`
-			Domain string `json:"domain"`
-		}
+	// 	// method := c.Context().Method()
 
-		var services []service
-		services = append(services, service{Name: "home", Domain: "http://127:0.0.1:6000"})
-		services = append(services, service{Name: "admins", Domain: "http://127:0.0.1:5000"})
-		services = append(services, service{Name: "users", Domain: "http://127:0.0.1:5050"})
-		services = append(services, service{Name: "cart", Domain: "http://127:0.0.1:6060"})
-		services = append(services, service{Name: "services", Domain: "http://127:0.0.1:7000"})
-		services = append(services, service{Name: "products", Domain: "http://127:0.0.1:7070"})
-		services = append(services, service{Name: "order-management", Domain: "http://127:0.0.1:8000"})
+	// 	// headers := c.Context().Request.Header
 
-		var requestedService service
+	// 	// body = c.Context().Request.Body()
 
-		for _, item := range services {
-			if item.Name == uriSplit[3] {
-				requestedService = item
-			}
-		}
+	// 	fmt.Println(uriSplit[3])
 
-		if requestedService.Name == "" {
-			return c.Status(fiber.StatusBadRequest).JSON("service not available")
-		}
+	// 	type service struct {
+	// 		Name   string `json:"name"`
+	// 		Domain string `json:"domain"`
+	// 	}
 
-		fmt.Println(requestedService)
-		return c.JSON(requestedService)
-	})
+	// 	var services []service
+	// 	services = append(services, service{Name: "users", Domain: "http://127:0.0.1:5050"})
+	// 	services = append(services, service{Name: "home", Domain: "http://127:0.0.1:6000"})
+	// 	services = append(services, service{Name: "cart", Domain: "http://127:0.0.1:6060"})
+	// 	services = append(services, service{Name: "services", Domain: "http://127:0.0.1:7000"})
+	// 	services = append(services, service{Name: "products", Domain: "http://127:0.0.1:7070"})
+	// 	services = append(services, service{Name: "order-management", Domain: "http://127:0.0.1:8000"})
 
-	app.Listen(":3000")
+	// 	var requestedService service
+
+	// 	for _, item := range services {
+	// 		if item.Name == uriSplit[3] {
+	// 			requestedService = item
+	// 		}
+	// 	}
+
+	// 	if requestedService.Name == "" {
+	// 		return c.Status(fiber.StatusBadRequest).JSON("service not available")
+	// 	}
+
+	// 	fmt.Println(requestedService)
+	// 	return c.JSON(requestedService)
+
+	// })
+
+	// app.Listen(":3000")
 }

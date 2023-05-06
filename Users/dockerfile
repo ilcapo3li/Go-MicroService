@@ -1,0 +1,7 @@
+FROM   golang:alpine
+WORKDIR /go/src
+COPY . /go/src
+RUN go mod download
+RUN go build -o /main
+EXPOSE 7070
+CMD [ "/main" ]
